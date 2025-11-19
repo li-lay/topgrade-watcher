@@ -2,7 +2,7 @@ name: Check Topgrade Upstream and Push Copr Build
 
 on:
   schedule:
-    - cron: '0 6 * * *' # 6 AM
+    - cron: "0 6 * * *" # 6 AM
   workflow_dispatch:
 
 jobs:
@@ -16,6 +16,7 @@ jobs:
         id: check
         env:
           UPSTREAM_REPO: "topgrade-rs/topgrade"
+          GH_TOKEN: ${{ github.token }}
         run: |
           # 1. Get the raw tag (e.g., v16.1.0)
           RAW_TAG=$(gh release list --repo $UPSTREAM_REPO --limit 1 --exclude-drafts --exclude-pre-releases | awk '{print $1}')
@@ -28,8 +29,6 @@ jobs:
 
           # Save the clean version for the next step
           echo "version=$CLEAN_VER" >> $GITHUB_OUTPUT
-        env:
-          GH_TOKEN: ${{ github.token }}
 
       - name: Update Spec File
         run: |
