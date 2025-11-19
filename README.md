@@ -1,6 +1,6 @@
 # Topgrade Watcher
 
-This repository automatically tracks the latest version of the [Topgrade](https://github.com/topgrade-rs/topgrade) utility and updates the `topgrade.spec` file and trigger [Fedora Copr Topgrade](https://copr.fedorainfracloud.org/coprs/lilay/topgrade) build.
+This repository automatically tracks the latest version of the [Topgrade](https://github.com/topgrade-rs/topgrade) utility and updates the `topgrade.spec` file and trigger [Fedora Copr](https://copr.fedorainfracloud.org/coprs/lilay/topgrade) build.
 
 Copr repo: https://copr.fedorainfracloud.org/coprs/lilay/topgrade
 
