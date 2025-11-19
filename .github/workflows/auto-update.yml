@@ -1,0 +1,58 @@
+name: Check Topgrade Upstream and Push Copr Build
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # 6 AM
+  workflow_dispatch:
+
+jobs:
+  update-spec:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Check Upstream Version
+        id: check
+        env:
+          UPSTREAM_REPO: "topgrade-rs/topgrade"
+        run: |
+          # 1. Get the raw tag (e.g., v16.1.0)
+          RAW_TAG=$(gh release list --repo $UPSTREAM_REPO --limit 1 --exclude-drafts --exclude-pre-releases | awk '{print $1}')
+
+          # 2. Strip the 'v' to get a clean number (e.g., 16.1.0)
+          CLEAN_VER=$(echo "$RAW_TAG" | sed 's/^v//')
+
+          echo "Latest tag: $RAW_TAG"
+          echo "Clean version: $CLEAN_VER"
+
+          # Save the clean version for the next step
+          echo "version=$CLEAN_VER" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Update Spec File
+        run: |
+          NEW_VER="${{ steps.check.outputs.version }}"
+          SPEC_FILE="topgrade.spec"
+
+          # Update the Version line in the spec file
+          sed -i "s/^Version:.*/Version:        $NEW_VER/" $SPEC_FILE
+
+          # Check if the file actually changed
+          if git diff --quiet; then
+            echo "No changes. You are already on version $NEW_VER."
+            echo "changed=false" >> $GITHUB_ENV
+          else
+            echo "Updating spec to version $NEW_VER."
+            echo "changed=true" >> $GITHUB_ENV
+          fi
+
+      - name: Commit and Push
+        if: env.changed == 'true'
+        run: |
+          git config user.name "Automated Builder"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Update to version ${{ steps.check.outputs.version }}"
+          git push
