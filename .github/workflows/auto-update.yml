@@ -3,7 +3,7 @@ name: Check Topgrade Upstream and Push Copr Build
 on:
   schedule:
     - cron: "0 6 * * *" # 6 AM
-  # workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   update-spec:
