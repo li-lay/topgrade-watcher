@@ -3,6 +3,7 @@
 This repository automatically tracks the latest version of the [Topgrade](https://github.com/topgrade-rs/topgrade) utility and updates the `topgrade.spec` file and trigger [Fedora Copr](https://copr.fedorainfracloud.org/coprs/lilay/topgrade) build.
 
 My Copr repo: [topgrade](https://copr.fedorainfracloud.org/coprs/lilay/topgrade)
+Status: [![Copr build status](https://copr.fedorainfracloud.org/coprs/lilay/topgrade/package/topgrade/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/lilay/topgrade/package/topgrade/)
 
 ## How it Works
 
