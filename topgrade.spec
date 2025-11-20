@@ -16,8 +16,10 @@ by invoking multiple package managers.
 It detects which tools you use and runs the appropriate
 commands to update them.
 
+%global debug_package %{nil}
+
 %prep
-%autosetup
+%setup
 
 %build
 cargo build --release
