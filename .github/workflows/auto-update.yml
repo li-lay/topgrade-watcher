@@ -57,3 +57,10 @@ jobs:
           git add .
           git commit -m "Update to version ${{ steps.check.outputs.version }}"
           git push
+          
+      - name: Create Release Tag
+        if: env.changed == 'true'
+        uses: actions/github-tag-action@v1
+        with:
+          tag: v${{ steps.check.outputs.version }}
+          github_token: ${{ github.token }}
