@@ -22,7 +22,7 @@ commands to update them.
 %setup
 
 %build
-cargo build --release
+cargo build --release --locked
 
 %install
 install -Dm755 target/release/topgrade %{buildroot}/usr/bin/topgrade
