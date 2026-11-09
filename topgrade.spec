@@ -1,5 +1,5 @@
 Name:     topgrade
-Version:        17.15.0
+Version:        17.16.0
 Release:  latest%{?dist}
 Summary:  Upgrade all the things
 
